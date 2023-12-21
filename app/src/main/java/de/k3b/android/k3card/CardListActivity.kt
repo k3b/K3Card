@@ -1,5 +1,6 @@
 package de.k3b.android.k3card
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -23,13 +24,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.k3b.android.k3card.ui.theme.K3CardTheme
 
 class CardListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                MessageCard(Message("Android", "Jetpack Compose"))
+            K3CardTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    MessageCard(Message("Android", "Jetpack Compose"))
+                }
             }
         }
     }
@@ -62,20 +66,34 @@ fun MessageCard(msg: Message) {
         Column {
             Text(
                 text = msg.author,
-                color = MaterialTheme.colorScheme.secondary)
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.titleSmall
+                )
             // Add a vertical space between the author and message texts
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = msg.body)
+            Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 1.dp) {
+                Text(
+                    text = msg.body,
+                    modifier = Modifier.padding(all = 4.dp),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }
 
-@Preview
-@Composable
+@Preview(name = "Light Mode")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Dark Mode"
+)@Composable
 fun PreviewMessageCard() {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        MessageCard(
-            msg = Message("Lexi", "Hey, take a look at Jetpack Compose, it's great!")
-        )
+    K3CardTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            MessageCard(
+                msg = Message("Lexi", "Hey, take a look at Jetpack Compose, it's great!")
+            )
+        }
     }
 }
