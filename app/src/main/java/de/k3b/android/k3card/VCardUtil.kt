@@ -4,13 +4,6 @@ import ezvcard.VCard
 import ezvcard.parameter.*
 import ezvcard.property.*
 
-fun VCard(name: String, vararg properties: VCardProperty) : VCard {
-    val v = VCard()
-    v.addFormattedName(FormattedName(name))
-    v.properties += properties
-    return v
-}
-
 fun StructuredName(family : String? = null, given : String? = null, prefix : String? = null, suffix : String? = null) : StructuredName {
     val n = StructuredName()
     if (family != null) n.family = family

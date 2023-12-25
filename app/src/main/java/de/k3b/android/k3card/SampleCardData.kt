@@ -1,11 +1,14 @@
 package de.k3b.android.k3card
 
+import ezvcard.VCard
+import ezvcard.VCardVersion
 import ezvcard.parameter.AddressType
 import ezvcard.parameter.EmailType
 import ezvcard.parameter.TelephoneType
 import ezvcard.property.Address
 import ezvcard.property.Birthday
 import ezvcard.property.Email
+import ezvcard.property.FormattedName
 import ezvcard.property.Note
 import ezvcard.property.Telephone
 
@@ -13,15 +16,17 @@ import ezvcard.property.Telephone
  * SampleData for Jetpack Compose Tutorial
  */
 object SampleVCardData {
+    val V_CARD_VERSION_DEFAULT = VCardVersion.V3_0
+
     // Sample conversation data
     val conversationSample = listOf(
-        VCard(
-            "John Doe",
+        VCard(V_CARD_VERSION_DEFAULT,
+            FormattedName("John Doe"),
             Note("Example contact without details"),
             Categories("Example"),
         ),
-        VCard(
-            "Theo Test",
+        VCard(V_CARD_VERSION_DEFAULT,
+            FormattedName("Theo Test"),
             StructuredName("Test", "Theo", "Dr", "MD"),
             Birthday("2001-12-24"),
             Telephone("+49 170 98765")
@@ -38,7 +43,8 @@ object SampleVCardData {
             Note("Example contact with details"),
             Categories("Example","Full Example"),
         ),
-        VCard("Mike Smith"),
+        VCard(V_CARD_VERSION_DEFAULT,
+            FormattedName("Mike Smith")),
     )
 
     private fun TestAddress(prefix: String): Address {
