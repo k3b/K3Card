@@ -20,13 +20,6 @@ fun StructuredName(family : String? = null, given : String? = null, prefix : Str
     return n
 }
 
-fun Email(number: String, typ: EmailType? = null, typ2: EmailType? = null): Email {
-    val p = Email(number)
-    if (typ != null) p.types += typ
-    if (typ2 != null) p.types += typ2
-    return p
-}
-
 fun Categories(vararg categoryNames: String): Categories {
     val p = ezvcard.property.Categories()
     p.values += categoryNames

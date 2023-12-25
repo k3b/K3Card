@@ -5,6 +5,7 @@ import ezvcard.parameter.EmailType
 import ezvcard.parameter.TelephoneType
 import ezvcard.property.Address
 import ezvcard.property.Birthday
+import ezvcard.property.Email
 import ezvcard.property.Note
 import ezvcard.property.Telephone
 
@@ -28,8 +29,11 @@ object SampleVCardData {
                 .setPref(1),
             Telephone("+49 30 12345")
                 .addType(TelephoneType.HOME),
-            Email("TheoTest@mycompany.com", EmailType.WORK).setPref(1),
-            Email("TheoTest@hotmail.com", EmailType.HOME),
+            Email("TheoTest@mycompany.com")
+                .addType(EmailType.WORK)
+                .setPref(1),
+            Email("TheoTest@hotmail.com")
+                .addType(EmailType.HOME),
             TestAddress("123"),
             Note("Example contact with details"),
             Categories("Example","Full Example"),
