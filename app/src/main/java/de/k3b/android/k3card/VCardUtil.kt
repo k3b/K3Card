@@ -20,17 +20,15 @@ fun StructuredName(family : String? = null, given : String? = null, prefix : Str
     return n
 }
 
-fun Telephone(number: String, typ: TelephoneType? = null, typ2: TelephoneType? = null, preference: Int? = null): Telephone {
+fun Telephone(number: String, typ: TelephoneType? = null, typ2: TelephoneType? = null): Telephone {
     val p = Telephone(number)
-    if (preference != null) p.pref = preference
     if (typ != null) p.types += typ
     if (typ2 != null) p.types += typ2
     return p
 }
 
-fun Email(number: String, typ: EmailType? = null, typ2: EmailType? = null, preference: Int? = null): Email {
+fun Email(number: String, typ: EmailType? = null, typ2: EmailType? = null): Email {
     val p = Email(number)
-    if (preference != null) p.pref = preference
     if (typ != null) p.types += typ
     if (typ2 != null) p.types += typ2
     return p
