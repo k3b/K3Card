@@ -1,0 +1,3 @@
+[submodule "ez-vcard"]
+	path = ez-vcard
+	url = https://github.com/k3b/ez-vcard
