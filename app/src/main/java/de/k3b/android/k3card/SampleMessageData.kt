@@ -3,7 +3,7 @@ import de.k3b.android.k3card.Message
 /**
  * SampleData for Jetpack Compose Tutorial 
  */
-object SampleData {
+object SampleMessageData {
     // Sample conversation data
     val conversationSample = listOf(
         Message(
