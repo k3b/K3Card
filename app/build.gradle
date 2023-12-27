@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "de.k3b.android.k3card"
-        minSdk 21 // required by compose: Android-5-Lollipop (API 21)
+        minSdk 21 // required by compose: Android-5-Lollipop (API 21); HCard/LocalTime/Timezone requires Android-8-Oreo(api 26) or desugar lib
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -35,6 +35,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -51,6 +52,8 @@ android {
 dependencies {
 //  implementation 'com.googlecode.ez-vcard:ez-vcard:0.12.1'
     implementation project(':ez-vcard')
+    // required by ez-vcard for minSdk < 26
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
     implementation platform('androidx.compose:compose-bom:2023.10.01')
