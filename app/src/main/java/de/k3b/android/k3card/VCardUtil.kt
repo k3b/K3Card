@@ -21,6 +21,15 @@ fun VCard(version: VCardVersion?, vararg properties: VCardProperty) : VCard {
     return n;
 }
 
+fun VCard.asDisplayString() : String {
+    val result = StringBuilder()
+    result.append("VCard-Version:").append(this.version).append("\n")
+    for (p in properties) {
+        result.append(p.getVEmoji()).append(" ").append(p.getVValue()).append("\n")
+    }
+    return result.toString()
+}
+
 /**
  * Kotlin helper to create a [StructuredName]
  * @param [family] family- or last-name i.e. Smith
@@ -132,33 +141,49 @@ fun VCardProperty.getVEmoji() : String {
 }
 
 fun VCardProperty.getVValue() : String {
-    val property = this
-    val result = when (property) {
-        is TextProperty -> getVValue(property.value) // FormattedName, Email, Note, Uid
-        is StructuredName  ->  getVValue(property.prefixes, property.given, property.additionalNames, property.family, property.suffixes)
-/*
-        is Address -> value(property.
-        is Telephone -> "📞"
-        is Birthday  ->  "🎂"
-        is Categories  ->  "🔖"
-
- */
-        else -> property.toString()
+    val p = this
+    val result = when (p) {
+        is TextProperty -> getVValue(p.value) // FormattedName, Email, Note, Uid
+        is StructuredName  ->  getVValue(p.prefixes, p.given, p.additionalNames, p.family, p.suffixes)
+        is Telephone -> getVValue(p.text,p.uri)
+        is DateOrTimeProperty  ->  getVValue(p.text,p.partialDate, p.date) // DateOrTimeProperty
+        is TextListProperty  ->  getVValue(p.values) // Categories
+        is Address  -> {
+            val label = p.label
+            if (label != null && label.isNotBlank()) {
+                return getVValue(p.label.replace("\r","").replace("\n"," "))
+            } else {
+                return getVValue(
+                    p.postalCodes,
+                    p.localities,
+                    p.regions,
+                    p.countries,
+                    p.streetAddresses,
+                    p.extendedAddresses,
+                    p.poBoxes
+                )
+            }
+        }
+        else -> p.toString()
     }
     return result
 }
 
 private fun getVValue(vararg items : Any?) : String {
+    return getVListValue(items.asList())
+}
+
+private fun getVListValue(items : List<Any?>) : String {
     val result = StringBuilder();
 
     items.filter { it != null } .forEach {
         when (it) {
-            is List<Any?> -> result.append(getVValue(it))
+            is List<Any?> -> result.append(getVListValue(it))
             else -> {
                 val newValue = it.toString()
                 if (newValue.isNotBlank()) result.append(newValue).append(" ") }
         }
     }
 
-    return result.toString();
+    return result.toString().trim();
 }
