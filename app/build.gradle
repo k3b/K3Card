@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'de.k3b.android.k3card'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "de.k3b.android.k3card"
-        minSdk 21 // required by compose: Android-5-Lollipop (API 21); HCard/LocalTime/Timezone requires Android-8-Oreo(api 26) or desugar lib
-        targetSdk 33
+        minSdk 23 // required by compose: Android-5-Lollipop (API 21); HCard/LocalTime/Timezone requires Android-8-Oreo(api 26) or desugar lib
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
