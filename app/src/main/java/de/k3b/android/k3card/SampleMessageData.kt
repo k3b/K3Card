@@ -4,6 +4,15 @@ import de.k3b.android.k3card.Message
  * SampleData for Jetpack Compose Tutorial 
  */
 object SampleMessageData {
+    // Sample message data
+    val messageSample = Message(
+        "Lexi",
+        """Hey, take a look at Jetpack Compose, it's great!
+            |It's the Android's modern toolkit for building native UI.
+            |It simplifies and accelerates UI development on Android.
+            |Less code, powerful tools, and intuitive Kotlin APIs :)""".trim()
+    )
+
     // Sample conversation data
     val conversationSample = listOf(
         Message(

@@ -20,15 +20,14 @@ BEGIN:VCARD
 VERSION:4.0
 PRODID:ez-vcard 0.12.2-SNAPSHOT
 FN:Theo Test
-UID:urn:uuid:9afaa51e-d578-4e2c-b6f3-4fd037e838d4
+UID:urn:uuid:d3d189a7-0a9e-4200-ba1f-529b0870c179
 N:Test;Theo;;Dr;MD
+ADR:000012345;third floor;Leopoldstraße 22;Munic;Bavaria;D81234;Germany
 BDAY:20011224
 TEL;TYPE=work,cell;PREF=1:+49 170 98765
 TEL;TYPE=home:+49 30 12345
 EMAIL;TYPE=work;PREF=1:TheoTest@mycompany.com
 EMAIL;TYPE=home:TheoTest@hotmail.com
-ADR;TYPE=work;LABEL="123 Main St.\nAustin, TX 12345\nUSA":;;123 Main St.;Au
- stin;TX;12345;USA
 NOTE:Example contact with details
 CATEGORIES:Example,Full Example
 END:VCARD
@@ -37,6 +36,9 @@ END:VCARD
         FormattedName("Theo Test"),
         Uid.random(),
         StructuredName("Test", "Theo", "Dr", "MD"),
+        Address("D81234", "Germany", "Bavaria", "Munic",
+            "Leopoldstraße 22", "third floor",
+            "000012345"),
         Birthday(LocalDate.of(2001,12,24)),
         Telephone("+49 170 98765")
             .addType(TelephoneType.WORK, TelephoneType.CELL)
@@ -48,13 +50,12 @@ END:VCARD
             .setPref(1),
         Email("TheoTest@hotmail.com")
             .addType(EmailType.HOME),
-        TestAddress("123"),
         Note("Example contact with details"),
         Categories("Example","Full Example"),
     )
 
     // Sample conversation data
-    val conversationSample = listOf(
+    val cardListSample = listOf(
         VCard(V_CARD_VERSION_DEFAULT,
             FormattedName("John Doe"),
             Uid.random(),
@@ -65,6 +66,7 @@ END:VCARD
         VCard(V_CARD_VERSION_DEFAULT,
             FormattedName("Mike Smith"),
             Uid.random(),
+            TestAddress("123"),
         ),
     )
 

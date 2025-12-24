@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -31,23 +29,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.k3b.android.k3card.ui.theme.K3CardTheme
-
-data class Message(val author: String, val body: String, val imageId : Int = 0)
+import ezvcard.property.VCardProperty
 
 @Composable
-fun MessageCard(msg: Message) {
+private fun PropertyCard(icon  : Any, text : String) {
+
+}
+
+@Composable
+fun VCardPropertyCard(vproperty: VCardProperty) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
-        ImageComponent(msg.imageId, msg.author)
+        EmojiComponent(getVEmoji(vproperty))
 
         // Add a horizontal space between the image and the column
         Spacer(modifier = Modifier.width(8.dp))
 
-        MessageContent(msg)
+        VCardPropertyContent(vproperty)
     }
 }
 
 @Composable
-private fun MessageContent(msg: Message) {
+private fun VCardPropertyContent(vproperty: VCardProperty) {
     // We keep track if the message is expanded or not in this
     // variable
     var isExpanded by remember { mutableStateOf(false) }
@@ -60,7 +62,7 @@ private fun MessageContent(msg: Message) {
     // We toggle the isExpanded variable when we click on this Column
     Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
         Text(
-            text = msg.author,
+            text = getVValue(vproperty),
             color = MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.titleSmall
         )
@@ -79,7 +81,7 @@ private fun MessageContent(msg: Message) {
 
         ) {
             Text(
-                text = msg.body,
+                text = getVValue(vproperty),
                 modifier = Modifier.padding(all = 4.dp),
                 // If the message is expanded, we display all its content
                 // otherwise we only display the first line
@@ -91,7 +93,7 @@ private fun MessageContent(msg: Message) {
 }
 
 @Composable
-private fun ImageComponent(imageId: Int, author: String) {
+private fun EmojiComponent(emoji: String, imageId : Int = 0) {
     if (imageId != 0) {
         Image(
             painter = painterResource(imageId),
@@ -104,8 +106,8 @@ private fun ImageComponent(imageId: Int, author: String) {
                 .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
         )
     } else {
-        val icon = "[" + author.subSequence(0, 1) + "] "
-        Text(text = icon)
+        // val icon = "[" + text.subSequence(0, 1) + "] "
+        Text(text = emoji)
     }
 }
 
@@ -115,23 +117,25 @@ private fun ImageComponent(imageId: Int, author: String) {
     showBackground = true,
     name = "Dark Mode"
 )@Composable
-fun PreviewMessageCard() {
+fun PreviewVProperyCard() {
     K3CardTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            MessageCard(
-                msg = SampleMessageData.messageSample
+            VCardPropertyCard(
+                vproperty = SampleVCardData.cardWithDetails.formattedName
             )
         }
     }
 }
 
+/*
 @Composable
-fun Conversation(messages: List<Message>) {
+fun Conversation(vcard: VCard) {
     LazyColumn {
-        items(messages) { message ->
-            MessageCard(message)
+        items(vcard.properties.filter { it != null && value(it).isNotBlank() }) {
+            VCardPropertyCard(it)
         }
     }
+
 }
 
 @Preview(name = "Light Mode")
@@ -142,6 +146,8 @@ fun Conversation(messages: List<Message>) {
 )@Composable
 fun PreviewConversation() {
     K3CardTheme {
-        Conversation(SampleMessageData.conversationSample)
+        Conversation(SampleVCardData.cardListSample)
     }
 }
+
+ */
