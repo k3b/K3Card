@@ -39,7 +39,7 @@ private fun PropertyCard(icon  : Any, text : String) {
 @Composable
 fun VCardPropertyCard(vproperty: VCardProperty) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
-        EmojiComponent(getVEmoji(vproperty))
+        EmojiComponent(vproperty.getVEmoji())
 
         // Add a horizontal space between the image and the column
         Spacer(modifier = Modifier.width(8.dp))
@@ -62,7 +62,7 @@ private fun VCardPropertyContent(vproperty: VCardProperty) {
     // We toggle the isExpanded variable when we click on this Column
     Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
         Text(
-            text = getVValue(vproperty),
+            text = vproperty.getVValue(),
             color = MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.titleSmall
         )
@@ -81,7 +81,7 @@ private fun VCardPropertyContent(vproperty: VCardProperty) {
 
         ) {
             Text(
-                text = getVValue(vproperty),
+                text = vproperty.getVValue(),
                 modifier = Modifier.padding(all = 4.dp),
                 // If the message is expanded, we display all its content
                 // otherwise we only display the first line
@@ -121,7 +121,7 @@ fun PreviewVProperyCard() {
     K3CardTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             VCardPropertyCard(
-                vproperty = SampleVCardData.cardWithDetails.formattedName
+                vproperty = SampleVCardData.cardWithDetails.getFormattedName()
             )
         }
     }

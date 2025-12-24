@@ -1,8 +1,25 @@
 package de.k3b.android.k3card
 
+import ezvcard.VCard
+import ezvcard.VCardVersion
+import ezvcard.parameter.EmailType
 import ezvcard.parameter.TelephoneType
 import ezvcard.parameter.VCardParameters
 import ezvcard.property.*
+
+
+/**
+ * Kotlin helper to create a [VCard]
+ * @param version the version to assign to the vCard
+ * @param properties the initial properties of the vCard.
+ */
+fun VCard(version: VCardVersion?, vararg properties: VCardProperty) : VCard {
+    val n = ezvcard.VCard(version)
+    for (p in properties) {
+        n.addProperty(p);
+    }
+    return n;
+}
 
 /**
  * Kotlin helper to create a [StructuredName]
@@ -47,6 +64,40 @@ fun Address(
     return n
 }
 
+/**
+ * Kotlin helper to create an [Categories]
+ */
+fun Categories(vararg
+    names : String) : Categories {
+    val n = ezvcard.property.Categories()
+    n.values.addAll(names)
+    return n
+}
+
+/**
+ * ... to allow fluent interface
+ */
+fun Telephone.addType(vararg types: TelephoneType): Telephone {
+    if (types.size > 0) getTypes().addAll(types);
+    return this;
+}
+
+/**
+ * ... to allow fluent interface
+ */
+fun Email.addType(vararg types: EmailType): Email {
+    if (types.size > 0) getTypes().addAll(types);
+    return this;
+}
+
+/**
+ * ... to allow fluent interface
+ */
+fun VCardProperty.setPreference(pref: Int?): VCardProperty {
+    this.getParameters().setPref(pref)
+    return this;
+}
+
 private fun getVEmoji(default : String?, properties : VCardParameters) : String {
     var pref = properties.pref
     var result = ""
@@ -63,7 +114,8 @@ private fun getVEmoji(default : String?, properties : VCardParameters) : String 
     return result;
 }
 
-fun getVEmoji(property : VCardProperty) : String {
+fun VCardProperty.getVEmoji() : String {
+    val property = this
     val result = when (property) {
         is FormattedName -> "😆"
         is StructuredName  ->  "😎"
@@ -79,7 +131,8 @@ fun getVEmoji(property : VCardProperty) : String {
     return getVEmoji(result, property.parameters)
 }
 
-fun getVValue(property : VCardProperty) : String {
+fun VCardProperty.getVValue() : String {
+    val property = this
     val result = when (property) {
         is TextProperty -> getVValue(property.value) // FormattedName, Email, Note, Uid
         is StructuredName  ->  getVValue(property.prefixes, property.given, property.additionalNames, property.family, property.suffixes)

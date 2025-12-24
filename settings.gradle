@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "K3Card"
 include ':app'
-include ':ez-vcard'
+// include ':ez-vcard' // mirror local copy to ease debugging

@@ -34,7 +34,8 @@ END:VCARD
     * */
     val cardWithDetails = VCard(V_CARD_VERSION_DEFAULT,
         FormattedName("Theo Test"),
-        Uid.random(),
+        Uid("urn:unittest:MyTestId4711"),
+        ProductId("MyUnitTest"),
         StructuredName("Test", "Theo", "Dr", "MD"),
         Address("D81234", "Germany", "Bavaria", "Munic",
             "Leopoldstraße 22", "third floor",
@@ -42,12 +43,12 @@ END:VCARD
         Birthday(LocalDate.of(2001,12,24)),
         Telephone("+49 170 98765")
             .addType(TelephoneType.WORK, TelephoneType.CELL)
-            .setPref(1),
+            .setPreference(1) ,
         Telephone("+49 30 12345")
             .addType(TelephoneType.HOME),
         Email("TheoTest@mycompany.com")
             .addType(EmailType.WORK)
-            .setPref(1),
+            .setPreference(1),
         Email("TheoTest@hotmail.com")
             .addType(EmailType.HOME),
         Note("Example contact with details"),

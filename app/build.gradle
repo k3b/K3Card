@@ -50,8 +50,8 @@ android {
 }
 
 dependencies {
-//  implementation 'com.googlecode.ez-vcard:ez-vcard:0.12.1'
-    implementation project(':ez-vcard')
+    implementation 'com.googlecode.ez-vcard:ez-vcard:0.12.1'
+    // implementation project(':ez-vcard') // local copy for debugging
     // required by ez-vcard for minSdk < 26
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
